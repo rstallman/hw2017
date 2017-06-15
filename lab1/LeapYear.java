@@ -3,6 +3,29 @@
  */
 public class LeapYear {
 
+
+
+    /**
+     * Decide whether a year is leap year
+     * A leap year is divisible by 400 or divisible by 4 not by 100
+     * @param year, the year
+     * @return, true if year is leap year
+     */
+    public static boolean isLeapYear(int year) {
+
+        if (year % 400 == 0) {
+            return true;
+        }
+        else if((year % 4 == 0) && (year % 100 != 0) ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    
+
     /** Calls isLeapYear to print correct statement.
      *  @param  year to be analyzed
      */
