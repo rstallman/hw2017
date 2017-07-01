@@ -1,5 +1,6 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import edu.princeton.cs.algs4.*;
 
 /** This class represents a sequence of operations. 
   *
