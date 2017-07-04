@@ -128,41 +128,29 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
 
     private Item[] shrink(int newLength) {
+
         Item[] res = (Item[]) new Object[newLength];
 
-       if (nextLast < nextFirst) {
+        if(nextFirst < nextLast) {
+            int destFirst = newLength / 2 - (nextLast - nextFirst) / 2;
+            int destLast  = destFirst + (nextLast - nextFirst);
+
+            System.arraycopy(items, nextFirst, res, destFirst, (nextLast - nextFirst + 1));
+            nextFirst = destFirst;
+            nextLast  = destLast;
+        }
+        else {
+            int destFirst = newLength / 2 + nextFirst - items.length;
+            int destLast  = newLength / 2 + nextLast;
             System.arraycopy(items, 0, res, newLength / 2, nextLast + 1);
+            System.arraycopy(items, nextFirst, res, destFirst, (items.length - nextFirst));
+            nextFirst = destFirst;
+            nextLast  = destLast;
 
-            int newFirst = newLength / 2 - (items.length - nextFirst);
-            int newLast  = newLength / 2 + nextLast;
-
-           // System.out.println("newFirst: " + newFirst + "newLast: " + newLast);
-            System.arraycopy(items, nextFirst, res, newFirst, items.length - nextFirst);
-            nextFirst = newFirst;
-            nextLast  = newLast;
-       }
-       else {
-
-           if (nextFirst >= items.length / 2 || nextLast < items.length / 2) {
-               System.arraycopy(items, nextFirst, res, newLength / 2 - 1, nextLast - nextFirst);
-               int tmp = nextLast - nextFirst;
-               nextFirst = newLength / 2 - 1;
-               nextLast  = nextFirst + tmp;
-           }
-           else  {
-
-               System.arraycopy(items, items.length / 2, res, newLength / 2, nextLast - items.length / 2);
-
-               System.arraycopy(items, nextFirst + 1, res, newLength / 2 - (items.length / 2 - nextFirst - 1), items.length / 2 - nextFirst - 1);
-
-               nextFirst = nextFirst - items.length / 4;
-
-               nextLast = nextLast - items.length / 4;
-           }
-
-       }
-
+        }
         return res;
+
+
     }
 
 
@@ -224,34 +212,29 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
         Deque<Integer> deq = new ArrayDeque<>();
 
-//        deq.addFirst(3);
-//        deq.addFirst(2);
-//        deq.addFirst(1);
-//        deq.addLast(4);
-//        deq.addLast(5);
 
-        // deq.printDeque();
-
-
-        for (int i = 0; i < 111; i++) {
+        for (int i = 0; i < 100; i++) {
             deq.addLast(i);
         }
 
-//        for (int i = 0; i < 260; i++) {
-//            deq.removeFirst();
-//        }
+        for (int i = 0; i < deq.size() / 3; i++) {
+            deq.removeFirst();
+        }
 
-     //   deq.printDeque();
+        for (int i = 0; i < deq.size() / 3; i++) {
+            deq.removeLast();
+        }
 //
-//        for(int i = 0; i < 100; i++) {
+//        deq.printDeque();
+//
+//        for(int i = 0; i < 60; i++) {
 //            System.out.println(deq.get(i) + ", ");
 //        }
 
 
         while (!deq.isEmpty()) {
             System.out.print(deq.removeLast() + " ");
-
-            // deq.removeLast();
+            // deq.removeFirst();
         }
 
     }

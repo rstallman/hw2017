@@ -13,15 +13,15 @@ public class TestArrayDeque1B {
     @Test
     public void testDeque() {
 
-        StudentArrayDeque<Integer> sdeq = new StudentArrayDeque<>();
+        MyArrayDeque<Integer> sdeq = new MyArrayDeque<>();
 
         ArrayDequeSolution<Integer> deq = new ArrayDequeSolution<>();
 
         OperationSequence fs = new OperationSequence();
 
 
-        int i = 0;
-        while (true){
+        // int i = 0;
+        for(int i = 0; i < 2000; i++){
             double numberBetweenZeroAndOne = StdRandom.uniform();
 
             if (numberBetweenZeroAndOne < 0.25) {

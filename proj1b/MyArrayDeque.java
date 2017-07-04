@@ -130,38 +130,23 @@ public class MyArrayDeque<Item> {
     private Item[] shrink(int newLength) {
         Item[] res = (Item[]) new Object[newLength];
 
-        if (nextLast < nextFirst) {
-            System.arraycopy(items, 0, res, newLength / 2, nextLast + 1);
+        if(nextFirst < nextLast) {
+            int destFirst = newLength / 2 - (nextLast - nextFirst) / 2;
+            int destLast  = destFirst + (nextLast - nextFirst);
 
-            int newFirst = newLength / 2 - (items.length - nextFirst);
-            int newLast  = newLength / 2 + nextLast;
-
-            // System.out.println("newFirst: " + newFirst + "newLast: " + newLast);
-            System.arraycopy(items, nextFirst, res, newFirst, items.length - nextFirst);
-            nextFirst = newFirst;
-            nextLast  = newLast;
+            System.arraycopy(items, nextFirst, res, destFirst, (nextLast - nextFirst + 1));
+            nextFirst = destFirst;
+            nextLast  = destLast;
         }
         else {
-
-            if (nextFirst >= items.length / 2 || nextLast < items.length / 2) {
-                System.arraycopy(items, nextFirst, res, newLength / 2 - 1, nextLast - nextFirst);
-                int tmp = nextLast - nextFirst;
-                nextFirst = newLength / 2 - 1;
-                nextLast  = nextFirst + tmp;
-            }
-            else  {
-
-                System.arraycopy(items, items.length / 2, res, newLength / 2, nextLast - items.length / 2);
-
-                System.arraycopy(items, nextFirst + 1, res, newLength / 2 - (items.length / 2 - nextFirst - 1), items.length / 2 - nextFirst - 1);
-
-                nextFirst = nextFirst - items.length / 4;
-
-                nextLast = nextLast - items.length / 4;
-            }
+            int destFirst = newLength / 2 + nextFirst - items.length;
+            int destLast  = newLength / 2 + nextLast;
+            System.arraycopy(items, 0, res, newLength / 2, nextLast + 1);
+            System.arraycopy(items, nextFirst, res, destFirst, (items.length - nextFirst));
+            nextFirst = destFirst;
+            nextLast  = destLast;
 
         }
-
         return res;
     }
 
@@ -219,4 +204,27 @@ public class MyArrayDeque<Item> {
         pos = pos % items.length;
         return items[pos];
     }
+
+
+
+    public static void main(String[] args) {
+
+        MyArrayDeque<Integer> deq = new MyArrayDeque<>();
+
+
+        for (int i = 0; i < 111; i++) {
+            deq.addLast(i);
+        }
+
+
+        while (!deq.isEmpty()) {
+            System.out.print(deq.removeLast() + " ");
+
+            // deq.removeLast();
+        }
+
+
+    }
+
+
 }

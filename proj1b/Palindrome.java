@@ -41,15 +41,7 @@ public class Palindrome {
 
         Character headChar  = deq.removeFirst();
         Character tailChar  = deq.removeLast();
-
-//        System.out.println("headChar: " + headChar);
-//        System.out.println("tailChar: " + tailChar);
-//
-//        System.out.println("headChar == tailChar? " + cc.equalChars(headChar, tailChar));
-
-
         return cc.equalChars(headChar, tailChar) && isPalindrome(deq, cc);
-
     }
 
     public static boolean isPalindrome(String word, CharacterComparator cc) {
